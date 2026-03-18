@@ -1,0 +1,215 @@
+/* ===== Variables / Thème ===== */
+:root{
+  --sidebar-w: 240px;
+  --accent: #33e6cc;
+  --text: #e0fffb;
+  --bg: #000;
+  --panel: #050608;
+}
+
+/* ===== Reset ===== */
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
+body{
+  margin: 0;
+  background: var(--bg);
+  font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--accent);
+}
+
+/* ===== Sidebar ===== */
+.sidebar{
+  position: fixed; top: 0; left: 0;
+  width: var(--sidebar-w); height: 100vh;
+  background: #050505;
+  border-right: 1px solid var(--accent);
+  padding: 20px; overflow-y: auto;
+}
+.logo{
+  text-align: center; margin: 0 0 20px;
+  font-size: 1.05rem; color: var(--accent);
+  text-shadow: 0 0 10px var(--accent);
+}
+.sidebar ul{ list-style: none; padding: 0; margin: 0; }
+.sidebar li{
+  padding: 12px; margin-bottom: 10px; cursor: pointer;
+  color: #b3fff5; border-left: 3px solid transparent;
+  transition: background .15s ease, border-color .15s ease;
+}
+.sidebar li:hover{ background: rgba(51,230,204,0.12); border-left: 3px solid var(--accent); }
+.sidebar li.active{ background: rgba(51,230,204,0.22); border-left: 3px solid var(--accent); box-shadow: 0 0 10px rgba(51,230,204,0.35) inset; }
+
+/* Titre non cliquable au-dessus du jeu */
+.menu-title{
+  margin-top: 8px; padding: 10px 12px; cursor: default;
+  color: #9feef0; letter-spacing: .8px; text-transform: uppercase;
+  border-top: 1px dashed rgba(51,230,204,.35);
+  border-left: none !important; background: transparent; opacity: .85;
+}
+.menu-title:hover{ background: transparent; }
+
+/* ===== Tree (arborescence) + animations ===== */
+.nav-root > li.has-children{ position: relative; padding-left: 28px; }
+.nav-root > li.has-children .label{ user-select: none; }
+.nav-root > li.has-children .caret{
+  position: absolute; left: 8px; top: 14px; width: 10px; height: 10px;
+  border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent);
+  transform: rotate(-45deg); opacity: .85;
+  transition: transform .18s ease, opacity .18s ease;
+}
+.nav-root > li.has-children.open .caret{ transform: rotate(45deg); }
+
+.tree-children{
+  overflow: hidden; margin: 6px 0 4px 0; padding-left: 14px;
+  border-left: 1px dashed rgba(51,230,204,.35);
+  max-height: 0; opacity: 0; transition: max-height .25s ease, opacity .2s ease;
+}
+.has-children.open > .tree-children{ max-height: 800px; opacity: 1; }
+
+.tree-children .tree-item{
+  padding: 8px 10px; margin: 4px 0; border-left: 2px solid transparent;
+  font-size: .95rem; transition: background .15s ease, border-color .15s ease;
+}
+.tree-children .tree-item:hover{ background: rgba(51,230,204,0.10); border-left: 2px solid var(--accent); }
+.tree-children .tree-item.active{ background: rgba(51,230,204,0.18); border-left: 2px solid var(--accent); }
+
+/* ===== Contenu ===== */
+.terminal{
+  margin-left: calc(var(--sidebar-w) + 1px);
+  min-height: 100vh;
+  background: var(--panel);
+  color: var(--text);
+  overflow-x: hidden;
+}
+.terminal-header{
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; border-bottom: 1px solid var(--accent);
+  background: #0b0d10;
+}
+.dot{ width: 12px; height: 12px; border-radius: 50%; }
+.red{ background: #ff5f56; } .yellow{ background: #ffbd2e; } .green{ background: #27c93f; }
+.title{ margin-left: 6px; color: #cde; }
+.terminal-content{ padding: 24px; }
+
+.section{ display: none; }
+.section.active{ display: block; }
+
+.ascii{
+  font-size: 1.4rem; margin: 0 0 16px;
+  color: var(--accent); text-shadow: 0 0 8px rgba(51,230,204,0.7);
+}
+
+.card{
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: rgba(51,230,204,0.06);
+  padding: 14px 16px; margin: 14px 0;
+}
+
+a{ color: var(--accent); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+
+/* Sous-onglets dans les sections (+ mini anim) */
+.subtabs{ margin: 6px 0 14px; }
+.subtabs ul{ display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.subtabs li{
+  position: relative; padding: 8px 12px;
+  border: 1px solid var(--accent); border-radius: 8px;
+  background: rgba(51,230,204,0.06); color: #b3fff5; cursor: pointer;
+  transition: background .15s ease, box-shadow .15s ease;
+}
+.subtabs li::after{
+  content:""; position: absolute; left: 12px; right: 12px; bottom: 6px;
+  height: 2px; background: var(--accent); transform: scaleX(0);
+  transform-origin: left; transition: transform .18s ease; opacity: .85;
+}
+.subtabs li:hover, .subtabs li.active{ background: rgba(51,230,204,0.18); box-shadow: 0 0 10px rgba(51,230,204,0.25) inset; }
+.subtabs li.active::after{ transform: scaleX(1); }
+
+.subpanels{ margin-top: 6px; }
+.subpanel{ display: none; }
+.subpanel.active{ display: block; animation: reveal .25s ease forwards; }
+@keyframes reveal{
+  from{ opacity: 0; transform: translateY(6px); }
+  to  { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Boutons / HUD ===== */
+.btn{
+  background: rgba(10, 50, 60, .5);
+  border: 1px solid rgba(51,230,204,.6);
+  border-radius: 6px;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 6px 10px;
+  margin-right: 6px;
+}
+.btn:hover{ box-shadow: 0 0 12px rgba(51,230,204,.4); }
+.hud { display: inline-flex; gap: 16px; margin-left: 8px; }
+
+/* ===== Jeu Dino SIO ===== */
+.game-controls{ display:flex; align-items:center; gap: 8px; flex-wrap: wrap; }
+.game-container{
+  position: relative;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: #061013;
+  box-shadow: inset 0 0 12px rgba(51,230,204,.15);
+  padding: 8px;
+}
+#dino-canvas{
+  width: 100%; height: auto; display: block;
+  background: linear-gradient(#081116, #0a1418);
+  border-radius: 4px;
+}
+.game-msg{
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: rgba(0,0,0,.45);
+  color: var(--text); font-size: 1.05rem; text-align: center;
+}
+.hidden{ display: none !important; }
+.note{ opacity: .85; }
+
+/* Modale philo (jeu) */
+.modal{ position: fixed; inset: 0; background: rgba(0,0,0,.5); display: grid; place-items: center; z-index: 50; }
+.modal.hidden{ display: none; }
+.modal-box{
+  background: #0b1114;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 16px;
+  width: min(520px, 92vw);
+  color: var(--text);
+  box-shadow: 0 0 16px rgba(51,230,204,.3);
+}
+.fake-control{ margin: 12px 0; display: grid; gap: 6px; }
+.fake-control input[disabled]{ opacity: .4; }
+
+/* ===== Fond MATRIX Rain ===== */
+#matrix{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.85; /* ajuste entre 0.5 et 0.9 selon ton goût */
+}
+body.bg-matrix::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(#000a, transparent 20%, transparent 80%, #000a);
+}
+@media (prefers-reduced-motion: reduce){
+  #matrix{ display: none; }
+}
+
+/* (Optionnel) Légère transparence du panneau pour laisser “respirer” le fond */
+/* .terminal{ background: rgba(5,6,8,.94); } */
+
+/* ===== Responsive ===== */
+@media (max-width: 900px){
+  .sidebar{ position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--accent); }
+  .terminal{ margin-left: 0; }
+}

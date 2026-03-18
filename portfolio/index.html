@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio – Londé Balossa Lotus Espoir</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<!-- Par défaut, on démarre sur Matrix ; le JS appliquera la préférence stockée -->
+<body class="bg-matrix">
+
+  <!-- Canvas du fond Matrix (derrière tout via CSS) -->
+  <canvas id="matrix" aria-hidden="true"></canvas>
+
+  <!-- Animation d’entrée (skippable) -->
+  <div id="intro" class="intro" aria-hidden="true">
+    <div class="intro-box" role="dialog" aria-label="Intro">
+      <pre class="intro-ascii">[=== PORTFOLIO ===]</pre>
+      <p class="intro-line">Bienvenue, <strong>Londé Balossa Lotus Espoir</strong></p>
+      <div class="intro-progress" aria-hidden="true"><span></span></div>
+      <button class="btn btn-skip" type="button" aria-label="Passer l’intro">Passer</button>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2 class="logo">Londé Balossa Lotus Espoir</h2>
+    <nav>
+      <ul class="nav-root">
+        <li class="active" data-section="home">🏠 Accueil</li>
+        <li data-section="apropos">👤 À propos</li>
+
+        <!-- Alternance (arborescence) -->
+        <li class="has-children" data-section="alternance" aria-expanded="false">
+          <span class="caret" aria-hidden="true"></span><span class="label">🏢 Alternance</span>
+          <ul class="tree-children">
+            <li class="tree-item" data-section="alternance" data-sub="alt-arrivee">• Arrivée</li>
+            <li class="tree-item" data-section="alternance" data-sub="alt-equipe">• Équipe infra</li>
+            <li class="tree-item" data-section="alternance" data-sub="alt-tuteur">• Tuteur</li>
+            <li class="tree-item" data-section="alternance" data-sub="alt-transdev">• Transdev</li>
+          </ul>
+        </li>
+
+        <li data-section="projets">🛠️ Projets</li>
+
+        <!-- Certifications (arborescence) -->
+        <li class="has-children" data-section="certifications" aria-expanded="false">
+          <span class="caret" aria-hidden="true"></span><span class="label">🏅 Certifications</span>
+          <ul class="tree-children">
+            <li class="tree-item" data-section="certifications" data-sub="cert-reseau">• Réseau</li>
+            <li class="tree-item" data-section="certifications" data-sub="cert-systemes">• Systèmes</li>
+            <li class="tree-item" data-section="certifications" data-sub="cert-cloud">• Cloud</li>
+            <li class="tree-item" data-section="certifications" data-sub="cert-securite">• Sécurité</li>
+            <li class="tree-item" data-section="certifications" data-sub="cert-devops">• DevOps / IaC</li>
+            <li class="tree-item" data-section="certifications" data-sub="cert-itsm">• ITSM / Gouvernance</li>
+            <li class="tree-item" data-section="certifications" data-sub="cert-outils">• Outils / Supervision</li>
+            <li class="tree-item" data-section="certifications" data-sub="cert-autres">• Autres</li>
+          </ul>
+        </li>
+
+        <!-- E6 – SISR (arborescence) -->
+        <li class="has-children" data-section="e6" aria-expanded="false">
+          <span class="caret" aria-hidden="true"></span><span class="label">🧪 E6 – SISR</span>
+          <ul class="tree-children">
+            <li class="tree-item" data-section="e6" data-sub="e6-overview">• Dossier numérique</li>
+            <li class="tree-item" data-section="e6" data-sub="e6-r1">• Réalisation 1</li>
+            <li class="tree-item" data-section="e6" data-sub="e6-r2">• Réalisation 2</li>
+            <li class="tree-item" data-section="e6" data-sub="e6-env">• Env. technologique (Annexe II.E)</li>
+            <li class="tree-item" data-section="e6" data-sub="e6-grilles">• Grilles & officiels</li>
+            <li class="tree-item" data-section="e6" data-sub="e6-deroulement">• Déroulement</li>
+          </ul>
+        </li>
+
+        <li data-section="veille">🔒 Veille technologique</li>
+        <li data-section="contact">📞 Contact</li>
+
+        <!-- Titre stylé non cliquable + Jeu tout en bas -->
+        <li class="menu-title" aria-disabled="true">🎮 ESPOIR RUN</li>
+        <li data-section="jeu">🎮 Jeu – Dino SIO</li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- CONTENU -->
+  <main class="terminal">
+    <div class="terminal-header">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <span class="title">espoir@portfolio:~</span>
+    </div>
+
+    <div class="terminal-content">
+
+      <!-- ACCUEIL -->
+      <section id="home" class="section active">
+        <h1 class="ascii">[=== BIENVENUE ===]</h1>
+        <p>Bienvenue sur le portfolio de <strong>Londé Balossa Lotus Espoir</strong>.</p>
+        <p>Utilise le menu à gauche pour naviguer.</p>
+      </section>
+
+      <!-- À PROPOS -->
+      <section id="apropos" class="section">
+        <h1 class="ascii">[=== À PROPOS ===]</h1>
+        <p>
+          Étudiant en BTS SIO (option SISR), je m’intéresse aux systèmes, réseaux et à la cybersécurité.
+          Mon objectif : bâtir des infrastructures <strong>performantes</strong>, <strong>sécurisées</strong> et <strong>résilientes</strong>.
+        </p>
+
+        <h2>Enjeux des infrastructures réseau aujourd’hui</h2>
+        <ul>
+          <li><strong>Performance &amp; scalabilité</strong> – absorber la croissance utilisateurs/données/services.</li>
+          <li><strong>Sécurité</strong> – faire face aux ransomwares, compromissions d’identités, exposition Internet.</li>
+          <li><strong>Disponibilité</strong> – maintenir un service 24/7 avec redondance, sauvegardes, PRA/PCA.</li>
+        </ul>
+
+        <h2>Dans la prochaine décennie</h2>
+        <ul>
+          <li><strong>Automatisation &amp; IaC/SDN</strong> – réseaux pilotés par code, déploiements répétables.</li>
+          <li><strong>Zero Trust généralisé</strong> – contrôle d’accès fort, moindre privilège, vérification continue.</li>
+          <li><strong>Observabilité</strong> – télémétrie fine, détection temps réel, auto‑remédiation.</li>
+          <li><strong>IA &amp; sécurité</strong> – détection d’anomalies, réponse automatisée.</li>
+        </ul>
+      </section>
+
+      <!-- ALTERNANCE -->
+      <section id="alternance" class="section">
+        <h1 class="ascii">[=== MON ALTERNANCE CHEZ TRANSDEV ===]</h1>
+
+        <nav class="subtabs" aria-label="Sous-onglets Alternance">
+          <ul>
+            <li class="active" data-sub="alt-arrivee">Arrivée</li>
+            <li data-sub="alt-equipe">Équipe infra</li>
+            <li data-sub="alt-tuteur">Tuteur</li>
+            <li data-sub="alt-transdev">Transdev</li>
+          </ul>
+        </nav>
+
+        <div class="subpanels">
+          <div id="alt-arrivee" class="subpanel active">
+            <div class="card">
+              <h2>Arrivée au sein du groupe Transdev</h2>
+              <p>(À compléter : contexte d’arrivée, objectifs de la mission, périmètre technique…)</p>
+            </div>
+          </div>
+
+          <div id="alt-equipe" class="subpanel">
+            <div class="card">
+              <h2>L’équipe infrastructure</h2>
+              <p>(À compléter : organisation, responsabilités, technologies principales, interactions…)</p>
+            </div>
+          </div>
+
+          <div id="alt-tuteur" class="subpanel">
+            <div class="card">
+              <h2>Mon tuteur d’alternance</h2>
+              <p>(À compléter : rôle, accompagnement, supervision, points d’apprentissage clés…)</p>
+            </div>
+          </div>
+
+          <div id="alt-transdev" class="subpanel">
+            <div class="card">
+              <h2>Transdev – présentation</h2>
+              <p>(À compléter : métier du groupe, enjeux IT, cartographie brièvement, chiffres clés…)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJETS -->
+      <section id="projets" class="section">
+        <h1 class="ascii">[=== PROJETS ===]</h1>
+        <div class="card">
+          <h2>E5 – Développement</h2>
+          <p>Application web PHP/MySQL (documentation à ajouter).</p>
+        </div>
+        <div class="card">
+          <h2>E6 – Infrastructure</h2>
+          <p>Ex : déploiement GLPI automatisé, supervision, annuaires… (à détailler).</p>
+        </div>
+      </section>
+
+      <!-- CERTIFICATIONS -->
+      <section id="certifications" class="section">
+        <h1 class="ascii">[=== CERTIFICATIONS ===]</h1>
+
+        <nav class="subtabs" aria-label="Sous-onglets Certifications">
+          <ul>
+            <li class="active" data-sub="cert-reseau">Réseau</li>
+            <li data-sub="cert-systemes">Systèmes</li>
+            <li data-sub="cert-cloud">Cloud</li>
+            <li data-sub="cert-securite">Sécurité</li>
+            <li data-sub="cert-devops">DevOps / IaC</li>
+            <li data-sub="cert-itsm">ITSM / Gouvernance</li>
+            <li data-sub="cert-outils">Outils / Supervision</li>
+            <li data-sub="cert-autres">Autres</li>
+          </ul>
+        </nav>
+
+        <div class="subpanels">
+          <div id="cert-reseau" class="subpanel active">
+            <div class="card">
+              <h2>Objectifs</h2>
+              <ul><li>Maîtriser routage, commutation, IPv4/IPv6, VLAN, ACL.</li></ul>
+            </div>
+            <div class="card">
+              <h2>Parcours & ressources</h2>
+              <ul class="download-list">
+                <li>#CCNA — plan de révision (PDF)</li>
+                <li>#JNCIA — notes & lab (Lien)</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h2>État</h2>
+              <ul>
+                <li>CCNA — <em>en préparation</em></li>
+                <li>JNCIA — <em>à moyen terme</em></li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="cert-systemes" class="subpanel">
+            <div class="card">
+              <h2>Objectifs</h2>
+              <ul><li>Linux (services, réseau), Windows (install, gestion, AD de base).</li></ul>
+            </div>
+            <div class="card">
+              <h2>Parcours & ressources</h2>
+              <ul class="download-list">
+                <li>#LPIC‑1 — plan (PDF)</li>
+                <li>#Windows Admin — checklists</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h2>État</h2>
+              <ul><li>LPIC‑1 — <em>en préparation</em></li></ul>
+            </div>
+          </div>
+
+          <div id="cert-cloud" class="subpanel">
+            <div class="card">
+              <h2>Objectifs</h2>
+              <ul><li>Fondamentaux Azure/AWS (IAM, compute, réseau, stockage).</li></ul>
+            </div>
+            <div class="card">
+              <h2>Parcours & ressources</h2>
+              <ul class="download-list">
+                <li>#AZ‑900 — mémo (PDF)</li>
+                <li>#AWS CCP — notes</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h2>État</h2>
+              <ul>
+                <li>AZ‑900 — <em>prévu</em></li>
+                <li>AWS CCP — <em>prévu</em></li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="cert-securite" class="subpanel">
+            <div class="card">
+              <h2>Objectifs</h2>
+              <ul><li>Socle sécurité (concepts, IAM, réseau, endpoint, cloud, conformité).</li></ul>
+            </div>
+            <div class="card">
+              <h2>Parcours & ressources</h2>
+              <ul class="download-list">
+                <li>#Security+ — notes</li>
+                <li>#NSE 1‑3 — progression</li>
+                <li>#SC‑900 — mémo</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h2>État</h2>
+              <ul>
+                <li>NSE 1‑3 — <em>en cours/obtenu (détailler)</em></li>
+                <li>Security+ — <em>à moyen terme</em></li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="cert-devops" class="subpanel">
+            <div class="card">
+              <h2>Objectifs</h2>
+              <ul><li>Containerisation, orchestration et IaC (Docker, K8s, Terraform).</li></ul>
+            </div>
+            <div class="card">
+              <h2>Parcours & ressources</h2>
+              <ul class="download-list">
+                <li>#Docker Associate — mémo</li>
+                <li>#Terraform Associate — labs</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h2>État</h2>
+              <ul><li>Terraform Associate — <em>prévu</em></li></ul>
+            </div>
+          </div>
+
+          <div id="cert-itsm" class="subpanel">
+            <div class="card">
+              <h2>Objectifs</h2>
+              <ul><li>Bonnes pratiques ITSM & cycle de vie des services.</li></ul>
+            </div>
+            <div class="card">
+              <h2>Parcours & ressources</h2>
+              <ul class="download-list">
+                <li>#ITIL® Foundation — mémo</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h2>État</h2>
+              <ul><li>ITIL® Foundation — <em>prévu</em></li></ul>
+            </div>
+          </div>
+
+          <div id="cert-outils" class="subpanel">
+            <div class="card">
+              <h2>Objectifs</h2>
+              <ul><li>Mettre en œuvre et superviser (Zabbix, ELK) + exploitation.</li></ul>
+            </div>
+            <div class="card">
+              <h2>Parcours & ressources</h2>
+              <ul class="download-list">
+                <li>#Zabbix — parcours</li>
+                <li>#ELK — fiches</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h2>État</h2>
+              <ul><li>Zabbix — <em>en pratique</em></li></ul>
+            </div>
+          </div>
+
+          <div id="cert-autres" class="subpanel">
+            <div class="card">
+              <h2>Autres badges / langues</h2>
+              <ul><li>TOEIC / Voltaire / Badges internes (à compléter)</li></ul>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- E6 – SISR -->
+      <section id="e6" class="section">
+        <h1 class="ascii">[=== E6 – SISR ===]</h1>
+
+        <nav class="subtabs" aria-label="Sous-onglets E6">
+          <ul>
+            <li class="active" data-sub="e6-overview">Dossier numérique</li>
+            <li data-sub="e6-r1">Réalisation 1</li>
+            <li data-sub="e6-r2">Réalisation 2</li>
+            <li data-sub="e6-env">Env. technologique (Annexe II.E)</li>
+            <li data-sub="e6-grilles">Grilles & officiels</li>
+            <li data-sub="e6-deroulement">Déroulement</li>
+          </ul>
+        </nav>
+
+        <div class="subpanels">
+          <div id="e6-overview" class="subpanel active">
+            <div class="card">
+              <h2>Contenu du dossier numérique</h2>
+              <ul>
+                <li>Deux réalisations (R1 & R2) avec fiches <em>Annexe VII‑1‑A</em> et accès aux productions.</li>
+                <li>Conception, déploiement, tests/recette, exploitation/supervision.</li>
+                <li>Conformité de l’environnement technologique (Annexe II.E).</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h2>Liens vers fiches et livrables</h2>
+              <ul class="download-list">
+                <li>#Fiche R1 – Annexe VII‑1‑A (PDF)</li>
+                <li>#Fiche R2 – Annexe VII‑1‑A (PDF)</li>
+                <li>#Dépôt / documentation (R1)</li>
+                <li>#Dépôt / documentation (R2)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="e6-r1" class="subpanel">
+            <div class="card"><h2>R1 — Contexte & Organisation</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Expression des besoins (VII‑3)</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Conception & Architecture</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Mise en œuvre / Déploiement</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Tests & Recette</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Exploitation & Supervision</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Docs & Accès aux productions</h2><p>(Compléter…)</p></div>
+          </div>
+
+          <div id="e6-r2" class="subpanel">
+            <div class="card"><h2>R2 — Contexte & Organisation</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Expression des besoins (VII‑3)</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Conception & Architecture</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Mise en œuvre / Déploiement</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Tests & Recette</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Exploitation & Supervision</h2><p>(Compléter…)</p></div>
+            <div class="card"><h2>Docs & Accès aux productions</h2><p>(Compléter…)</p></div>
+          </div>
+
+          <div id="e6-env" class="subpanel">
+            <div class="card"><h2>Conformité Annexe II.E — Points à couvrir</h2><p>(Compléter…)</p></div>
+          </div>
+
+          <div id="e6-grilles" class="subpanel">
+            <div class="card"><h2>Ressources officielles</h2><p>(Compléter liens PDF…)</p></div>
+          </div>
+
+          <div id="e6-deroulement" class="subpanel">
+            <div class="card"><h2>Déroulement du passage</h2><p>T / E1 / Réalisation / E2 (compléter…)</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 🎮 JEU – DINO SIO -->
+      <section id="jeu" class="section">
+        <h1 class="ascii">[=== JEU – DINO SIO ===]</h1>
+
+        <div class="card game-controls">
+          <button class="btn btn-start">▶ Démarrer</button>
+          <button class="btn btn-restart">⟲ Rejouer</button>
+          <button class="btn btn-difficulty">⚙ Régler la difficulté</button>
+          <div class="hud">
+            <span>Score : <strong id="score">0</strong></span>
+            <span>Niveau : <strong id="level-label">CP</strong></span>
+          </div>
+        </div>
+
+        <div class="game-container">
+          <canvas id="dino-canvas" width="760" height="220" aria-label="Jeu Dino SIO"></canvas>
+          <div id="game-msg" class="game-msg hidden"></div>
+        </div>
+
+        <!-- Modale “philo” -->
+        <div id="diff-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="diff-title">
+          <div class="modal-box">
+            <h3 id="diff-title">Difficulté</h3>
+            <p>Si ce bouton existait, ce ne serait pas fun 😉</p>
+            <div class="fake-control">
+              <label>Niveau</label>
+              <input type="range" min="1" max="5" value="3" disabled>
+              <span class="hint">(désactivé par choix philosophique)</span>
+            </div>
+            <button class="btn btn-close-modal">Fermer</button>
+          </div>
+        </div>
+
+        <p class="note">Astuce : presse <kbd>Espace</kbd> ou <kbd>↑</kbd> pour sauter. Sur mobile, touche le canvas.</p>
+      </section>
+
+      <!-- VEILLE -->
+      <section id="veille" class="section">
+        <h1 class="ascii">[=== VEILLE TECHNOLOGIQUE ===]</h1>
+        <p>Thème : <strong>Zero Trust Security Model</strong> (aussi appelé <em>Zero Trust Architecture</em>).</p>
+
+        <h2>Flux RSS (pré‑configuré)</h2>
+        <p>Les derniers articles (nécessite un petit serveur local) :</p>
+        <div id="rss-container" class="rss"></div>
+
+        <details class="card">
+          <summary>Comment ça marche ? (RSS)</summary>
+          <ul>
+            <li>Flux sécurité (CSO Online, Microsoft Security Blog, etc.).</li>
+            <li>Proxy public AllOrigins pour tester en local.</li>
+            <li>En prod : prévoir un petit proxy côté serveur.</li>
+          </ul>
+        </details>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="section">
+        <h1 class="ascii">[=== CONTACT ===]</h1>
+        <p>Nom : <strong>Londé Balossa Lotus Espoir</strong></p>
+        <p>Email : <a href="mailto:espoir@example.com">espoir@example.com</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- 🎨 SÉLECTEUR DE FOND -->
+  <div class="bg-picker" aria-label="Sélecteur de fond">
+    <button class="bg-btn" aria-haspopup="true" aria-expanded="false" title="Changer de fond">🎨 Fond</button>
+    <div class="bg-menu hidden" role="menu" aria-label="Choisir un fond">
+      <button role="menuitemradio" aria-checked="true"  data-bg="matrix">Matrix Rain</button>
+      <button role="menuitemradio" aria-checked="false" data-bg="gradient">Neon Gradient</button>
+      <button role="menuitemradio" aria-checked="false" data-bg="hex">Hex Scan</button>
+      <button role="menuitemradio" aria-checked="false" data-bg="none">Aucun</button>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
